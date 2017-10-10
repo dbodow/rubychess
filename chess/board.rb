@@ -8,6 +8,7 @@ end
 class Board
   attr_reader :grid
 
+  # refactor to set up the correct piece in the correct position
   def initialize
     @grid = Array.new(4) {Array.new(8){nil} }
     2.times {@grid.unshift(Array.new(8){Piece.new(self)})}  # white pieces

@@ -1,11 +1,13 @@
 require 'byebug'
 require_relative 'piece'
-
+require 'colorize'
 class InvalidMove < StandardError
 
 end
 
 class Board
+  attr_reader :grid
+
   def initialize
     @grid = Array.new(4) {Array.new(8){nil} }
     2.times {@grid.unshift(Array.new(8){Piece.new})}  # white pieces
@@ -31,5 +33,11 @@ class Board
   def []=(pos, val)
     x, y = pos
     @grid[x][y] = val
+  end
+
+  def in_bounds(pos)
+    x,y = pos
+    return false unless x.bewteen?(0,7) && y.bewteen(0,7)
+    true
   end
 end

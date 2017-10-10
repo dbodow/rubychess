@@ -24,7 +24,7 @@ class Display
         if (i + j).odd?
           to_print[i][j] = to_print[i][j].colorize(:color => :blue, :background => :white)
         else
-          to_print[i][j] = to_print[i][j].colorize(:color => :blue, :background => :brown)
+          to_print[i][j] = to_print[i][j].colorize(:color => :blue, :background => :bg_brown)
         end
       end
     end

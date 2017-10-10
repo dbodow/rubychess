@@ -10,7 +10,7 @@ class Board
 
   def initialize
     @grid = Array.new(4) {Array.new(8){nil} }
-    2.times {@grid.unshift(Array.new(8){Piece.new})}  # white pieces
+    2.times {@grid.unshift(Array.new(8){Piece.new(self)})}  # white pieces
     2.times {@grid.push(Array.new(8){Piece.new})}     # black pieces
   end
 

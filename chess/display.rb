@@ -5,7 +5,12 @@ class Display
 
   RENDERMAP = {
     NullPiece => ' ',
-    Rook => 'R'
+    Rook => 'R',
+    Queen => 'Q',
+    King => 'K',
+    Bishop => 'B',
+    Knight => 'N',
+    Pawn => 'i'
   }
 
   def initialize(cursor = Cursor.new )

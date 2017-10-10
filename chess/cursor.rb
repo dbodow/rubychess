@@ -79,7 +79,6 @@ class Cursor
   end
 
   def handle_key(key)
-    puts "Now Handling Key"
     case key
     when :return, :space # return cursor_pos
       @cursor_pos

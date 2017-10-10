@@ -37,7 +37,7 @@ class Board
 
   def in_bounds(pos)
     x,y = pos
-    return false unless x.bewteen?(0,7) && y.bewteen(0,7)
+    return false unless x.between?(0,7) && y.between?(0,7)
     true
   end
 end

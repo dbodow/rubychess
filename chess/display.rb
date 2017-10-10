@@ -21,10 +21,10 @@ class Display
 
     # highlight the cursor
     x,y = @cursor.cursor_pos
-    to_print[x][y] = to_print[x][y].colorize(:color => :yellow, :background => :purple )
+    to_print[x][y] = to_print[x][y].colorize(:color => :yellow, :background => :red )
 
 
-    to_print.each {|row| puts row }
+    to_print.each { |row| print row.join(" ") + "\n" }
 
   end
 

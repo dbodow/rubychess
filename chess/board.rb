@@ -10,9 +10,9 @@ class Board
 
   # refactor to set up the correct piece in the correct position
   def initialize
-    @grid = Array.new(4) {Array.new(8){nil} }
-    2.times {@grid.unshift(Array.new(8){Piece.new(self)})}  # white pieces
-    2.times {@grid.push(Array.new(8){Piece.new})}     # black pieces
+    @grid = Array.new(4) {Array.new(8){NullPiece.instance} }
+    2.times {@grid.unshift(Array.new(8){Rook.new(,self,:white)})}  # white pieces
+    2.times {@grid.push(Array.new(8){Rook.new( , self, :black)})}     # black pieces
   end
 
   def move_piece(start_pos, end_pos)
@@ -36,7 +36,7 @@ class Board
     @grid[x][y] = val
   end
 
-  def in_bounds(pos)
+  def self.in_bounds(pos)
     x,y = pos
     return false unless x.between?(0,7) && y.between?(0,7)
     true

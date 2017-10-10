@@ -17,7 +17,9 @@ end
 class King < Piece; end
 class Knight < Piece; end
 class Queen < Piece; end
-class Rook < Piece; end
+class Rook < Piece
+  include SlidingPiece
+end
 class Bishop < Piece; end
 
 class Pawn < Piece; end
@@ -37,22 +39,50 @@ module SlidingPiece
     @moves = []
     case direction
     when :cardinal
-      @moves << self.horizontal_moves
-      @moves << self.vertical_moves
+      @moves.concat(self.horizontal_moves)
+      @moves.concat(self.vertical_moves)
     when :diagonal
-      @moves << self.diagonal_up_moves
-      @moves << self.diagonal_down_moves
+      @moves.concat(self.diagonal_up_moves)
+      @moves.concat(self.diagonal_down_moves)
     when :both
-      @moves << self.horizontal_moves
-      @moves << self.vertical_moves
-      @moves << self.diagonal_up_moves
-      @moves << self.diagonal_down_moves
+      @moves.concat(self.horizontal_moves)
+      @moves.concat(self.vertical_moves)
+      @moves.concat(self.diagonal_up_moves)
+      @moves.concat(self.diagonal_down_moves)
     end
   end
 
-  #return an array of legal horizontal moves from piece's position
+  # return an array of legal horizontal moves from piece's position
   def horizontal_moves
+    h_moves = []
+    row, col = @position
+    # left moves
+    (col - 1).downto(0) do |col_i|
+      case board[row, col_i].color
+      when :blank
+        h_moves << [row, col_i]
+      when @color # same color (blocked by self)
+        break
+      else # opponent color (capture piece)
+        h_moves << [row, col_i]
+        break
+      end
+    end
 
+    # right moves
+    (col + 1).upto(7) do |col_i|
+      case board[row, col_i].color
+      when :blank
+        h_moves << [row, col_i]
+      when @color # same color (blocked by self)
+        break
+      else # opponent color (capture piece)
+        h_moves << [row, col_i]
+        break
+      end
+    end
+
+    h_moves.select! { |move| Board.in_bounds(move) }
   end
 
   #return an array of legal vertical moves from piece's position

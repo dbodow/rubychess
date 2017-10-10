@@ -1,35 +1,5 @@
-class Piece
-
-  def initialize(position, board, color)
-    @oosition = position
-    @board = board
-    @color = color
-  end
-
-  # moves: nil => array of positions
-  # returns an array of positions that are legal moves for self
-  def moves
-
-  end
-
-end
-
-class King < Piece; end
-class Knight < Piece; end
-class Queen < Piece; end
-class Rook < Piece
-  include SlidingPiece
-end
-class Bishop < Piece; end
-
-class Pawn < Piece; end
-
-class NullPiece < Piece
-  include Singleton
-  def initialize
-    @color = :empty
-  end
-end
+require 'singleton'
+require 'byebug'
 
 
 module SlidingPiece
@@ -39,8 +9,9 @@ module SlidingPiece
     @moves = []
     case direction
     when :cardinal
+      byebug
       @moves.concat(self.horizontal_moves)
-      @moves.concat(self.vertical_moves)
+      # @moves.concat(self.vertical_moves)
     when :diagonal
       @moves.concat(self.diagonal_up_moves)
       @moves.concat(self.diagonal_down_moves)
@@ -50,6 +21,7 @@ module SlidingPiece
       @moves.concat(self.diagonal_up_moves)
       @moves.concat(self.diagonal_down_moves)
     end
+
   end
 
   # return an array of legal horizontal moves from piece's position
@@ -58,7 +30,7 @@ module SlidingPiece
     row, col = @position
     # left moves
     (col - 1).downto(0) do |col_i|
-      case board[row, col_i].color
+      case @board[[row, col_i]].color
       when :blank
         h_moves << [row, col_i]
       when @color # same color (blocked by self)
@@ -67,11 +39,12 @@ module SlidingPiece
         h_moves << [row, col_i]
         break
       end
+
     end
 
     # right moves
     (col + 1).upto(7) do |col_i|
-      case board[row, col_i].color
+      case @board[[row, col_i]].color
       when :blank
         h_moves << [row, col_i]
       when @color # same color (blocked by self)
@@ -80,13 +53,15 @@ module SlidingPiece
         h_moves << [row, col_i]
         break
       end
-    end
 
-    h_moves.select! { |move| Board.in_bounds(move) }
+    end
+    h_moves.select { |move| Board.in_bounds(move) }
   end
 
   #return an array of legal vertical moves from piece's position
   def vertical_moves
+    v_moves = []
+    v_moves.select { |move| Board.in_bounds(move) }
 
   end
 
@@ -115,6 +90,45 @@ module SlidingPiece
   end
 
 end
+
+
+class Piece
+
+  attr_reader :moves, :color
+
+  def initialize(position, board, color)
+    @position = position
+    @board = board
+    @color = color
+    @moves = nil
+  end
+
+  # moves: nil => array of positions
+  # returns an array of positions that are legal moves for self
+  # def moves
+  #
+  # end
+
+end
+
+class King < Piece; end
+class Knight < Piece; end
+class Queen < Piece; end
+class Rook < Piece
+  include SlidingPiece
+end
+class Bishop < Piece; end
+
+class Pawn < Piece; end
+
+class NullPiece < Piece
+  include Singleton
+  def initialize
+    @color = :empty
+  end
+end
+
+
 
 module SteppingPice
 

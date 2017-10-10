@@ -10,9 +10,24 @@ class Board
 
   # refactor to set up the correct piece in the correct position
   def initialize
-    @grid = Array.new(4) {Array.new(8){NullPiece.instance} }
-    2.times {@grid.unshift(Array.new(8){Rook.new(,self,:white)})}  # white pieces
-    2.times {@grid.push(Array.new(8){Rook.new( , self, :black)})}     # black pieces
+    @grid = Array.new(8) {Array.new(8){NullPiece.instance} }
+
+    (0..1).each do |row|
+      (0..7).each do |col|
+        self[[row,col]] = Rook.new([row,col],self, :white )
+      end
+    end
+
+    (6..7).each do |row|
+      (0..7).each do |col|
+        self[[row,col]] = Rook.new([row,col],self, :black )
+      end
+    end
+
+    # 2.times do |row|
+    # # 2.times {@grid.unshift(Array.new(8){Rook.new( ,self,:white)})}  # white pieces  #currently no position for rook
+    #
+    # 2.times {@grid.push(Array.new(8){Rook.new( , self, :black)})}     # black pieces # currently no position for rook
   end
 
   def move_piece(start_pos, end_pos)

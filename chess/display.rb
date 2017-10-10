@@ -4,8 +4,8 @@ require 'colorize'
 class Display
 
   RENDERMAP = {
-    NilClass => ' ',
-    Piece => 'p'
+    NullPiece => ' ',
+    Rook => 'R'
   }
 
   def initialize(cursor = Cursor.new )

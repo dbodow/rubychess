@@ -94,7 +94,7 @@ class Cursor
 
   def update_pos(diff)
     candidate_pos = @cursor_pos.zip(diff).map { |pair| pair.inject(:+) }
-    if board.in_bounds(candidate_pos)
+    if Board.in_bounds(candidate_pos)
       @cursor_pos = candidate_pos
     end
 
